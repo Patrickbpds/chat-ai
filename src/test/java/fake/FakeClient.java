@@ -9,6 +9,6 @@ import java.util.List;
 public class FakeClient implements AiClient {
     @Override
     public String generate (String modelId, List<Message> history, String userInput, String systemPrompt) throws IOException {
-        throw new IOException("API error");
+        return "eco: " + userInput;
     }
 }
