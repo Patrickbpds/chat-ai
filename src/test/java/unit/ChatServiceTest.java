@@ -19,7 +19,7 @@ public class ChatServiceTest {
     @Test
     public void replyAddsUserAndModelMessages() throws IOException {
         ChatService chatService = new ChatService(
-                new FakeClient(), "gemini-1.5-flash", "You are a helpful assistant.", 5);
+                new FakeClient(), "gemini-2.5-flash", "You are a helpful assistant.", 5);
         List<Message> history = new ArrayList<>();
 
         String answer = chatService.reply(history, "Hello, how are you?");
@@ -42,7 +42,7 @@ public class ChatServiceTest {
     @Test
     public void replyValidation() {
         ChatService svc = new ChatService(
-                new FakeClient(), "gemini-1.5-flash", "You are a helpful assistant.", 5);
+                new FakeClient(), "gemini-2.5-flash", "You are a helpful assistant.", 5);
         assertThrows(NullPointerException.class, () -> svc.reply(null, "Input"));
         assertThrows(NullPointerException.class, () -> svc.reply(new ArrayList<>(), null));
     }
@@ -50,7 +50,7 @@ public class ChatServiceTest {
     @Test
     public void propagatesIOException() {
         ChatService svc = new ChatService(
-                new FailingClient(), "gemini-1.5-flash", "You are a helpful assistant.", 5);
+                new FailingClient(), "gemini-2.5-flash", "You are a helpful assistant.", 5);
         List<Message> history = new ArrayList<>();
 
         IOException ex = assertThrows(IOException.class, () -> svc.reply(history, "input"));

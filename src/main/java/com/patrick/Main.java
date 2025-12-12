@@ -17,14 +17,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws Exception {
       String apikey = Env.get("GOOGLE_API_KEY_GEMINI", true);
-      String modelId = Env.getOrDefault("MODEL_ID", "gemini-1.5-flash");
+      String modelId = Env.getOrDefault("MODEL_ID", "gemini-2.5-flash");
 
       OkHttpClient httpClient = new OkHttpClient.Builder()
               .callTimeout(Duration.ofSeconds(30))
               .build();
 
         GeminiClient geminiClient = new GeminiClient(httpClient, "https://generativelanguage.googleapis.com", apikey);
-        String system = "Write a short poem about the sea in English.";
+        String system = "You are a specialized english tutor. Help the user learn English by answering their questions and providing explanations.";
         ChatService chatService = new ChatService(geminiClient, modelId, system, 5);
 
         run (chatService, System.in, System.out);

@@ -48,7 +48,7 @@ public class GeminiClientIntegrationTest {
                 .addHeader("Content-Type", "application/json")
         );
         String output = client.generate(
-                "gemini-1.5-flash",
+                "gemini-2.5-flash",
                 List.of(new Message(Role.USER, "Hello")),
                 "How are you?",
                 "SystemPrompt"
@@ -68,7 +68,7 @@ public class GeminiClientIntegrationTest {
         );
 
         assertDoesNotThrow(() -> client.generate(
-                    "gemini-1.5-flash",
+                    "gemini-2.5-flash",
                     List.of(),
                     "Hi",
                     "sys")
@@ -80,7 +80,7 @@ public class GeminiClientIntegrationTest {
         server.enqueue(new MockResponse().setResponseCode(401).setBody("{\"error\": \"Unauthorized\"}"));
 
         Exception exception = assertThrows(IOException.class, () -> client.generate(
-                    "gemini-1.5-flash",
+                    "gemini-2.5-flash",
                     List.of(),
                     "Hi",
                     "sys")
@@ -94,7 +94,7 @@ public class GeminiClientIntegrationTest {
                 "{ \"candidates\": [ { \"content\": { \"parts\":  [{\"text\": \"Retry success\"} ]}} ] }"));
 
         assertDoesNotThrow(() -> client.generate(
-                    "gemini-1.5-flash",
+                    "gemini-2.5-flash",
                     List.of(),
                     "test",
                     "sys")
@@ -217,7 +217,7 @@ public class GeminiClientIntegrationTest {
                 new Message(Role.MODEL, "Hello!")
         );
         client.generate(
-                "gemini-1.5-flash",
+                "gemini-2.5-flash",
                 history,
                 "How are you?",
                 "Be helpful."
@@ -247,7 +247,7 @@ public class GeminiClientIntegrationTest {
         );
 
         client.generate(
-                "gemini-1.5-flash",
+                "gemini-2.5-flash",
                 List.of(),
                 "input",
                 ""
