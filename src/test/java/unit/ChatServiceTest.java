@@ -1,5 +1,6 @@
 package unit;
 
+import com.patrick.application.ChatService;
 import com.patrick.domain.Message;
 import com.patrick.domain.Role;
 import fake.FailingClient;
@@ -23,7 +24,7 @@ public class ChatServiceTest {
 
         String answer = chatService.reply(history, "Hello, how are you?");
 
-        assertEquals("eco:Hello", answer);
+        assertEquals("eco: Hello, how are you?", answer);
         assertEquals(2, history.size());
         assertEquals(Role.USER, history.get(0).role());
         assertEquals(Role.MODEL, history.get(1).role());
@@ -31,9 +32,7 @@ public class ChatServiceTest {
 
     @Test
     public void constructorValidation(){
-        assertThrows(NullPointerException.class, () -> {
-            new ChatService(null, "model", "system prompt", 5);
-        });
+        assertThrows(NullPointerException.class, () -> new ChatService(null, "model", "system prompt", 5));
         assertThrows(NullPointerException.class, () -> new ChatService(new FakeClient(), null, "system prompt", 5));
         assertDoesNotThrow(() -> new ChatService(new FakeClient(), "model", null, 5));
         ChatService svc = new ChatService(new FakeClient(), "model", "system prompt", 1);
@@ -48,7 +47,7 @@ public class ChatServiceTest {
         assertThrows(NullPointerException.class, () -> svc.reply(new ArrayList<>(), null));
     }
 
-    Test
+    @Test
     public void propagatesIOException() {
         ChatService svc = new ChatService(
                 new FailingClient(), "gemini-1.5-flash", "You are a helpful assistant.", 5);
